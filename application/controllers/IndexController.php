@@ -17,17 +17,13 @@ class IndexController extends Zend_Controller_Action
 
          if( $this->_request->isPost() ){
              if( $this->_form->isValid( $this->_request->getPost() ) ){
-                 if( !$this->getIsCreateAllowed() ) {
-                     $this->view->messages[] = "Cet enregistrement existe déjà.";
-                 } else {
-                     $this->_model->save();
-                     $this->_flashMessenger->addMessage('Ajout du nouvel enregistrement réussi.');
-                     return $this->_redirect( $this->view->url(array('index','success'),null,true) );
-                 }
+                 $this->_model->save();
+                 $this->_flashMessenger->addMessage('Your report has been successfully saved.');
+                 return $this->_redirect( $this->view->url(array('index','success'),null,true) );
              }
              else{
                  $errors = $this->_form->getMessages();
-                 $this->setAjaxResponse("error",array("Formulaire invalide",$errors));
+                 $this->setAjaxResponse("error",array("Invalid form",$errors));
                  $this->_form->populate($this->_request->getPost());
              } 
          }
