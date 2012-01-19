@@ -1,0 +1,61 @@
+<?php echo $this->flashmessenger( $this->messages ) ?>
+<script type="text/javascript" charset="utf-8">
+    $("form").hide();
+</script>
+<form action="/index/index" method="post" accept-charset="utf-8">
+
+<h1>Your Country / ISP</h1>
+
+<?php echo $this->form->country; ?>
+<?php echo $this->form->isp; ?>
+
+<h2>Add as many lines as practices</h2>
+
+<div id="clues">
+<span class="inline">
+    <span>&nbsp;</span>
+    <span class="element">Pick a type of blocking/throttling <sup>a</sup></span>
+</span>
+<span class="inline">
+    <span>&nbsp;</span>
+    <span class="element">Description of the measure </span>
+</span>
+<span class="inline">
+    <span>&nbsp;</span>
+    <span class="element">How are you informed?</span>
+</span>
+<span class="inline">
+    <span class="checkbox">Can you activate/deactivate the measure?</span>
+</span>
+</div>
+
+
+<?php echo $this->form->getDisplayGroup("row_0_group"); ?>
+<p><a href="javascript:void(0)" id="show2" class="btn">Fill a second case</a></p>
+<?php echo $this->form->getDisplayGroup("row_1_group"); ?>
+<p><a href="javascript:void(0)" id="show3" class="btn" style="display:none;">Fill a third case</a></p>
+<?php echo $this->form->getDisplayGroup("row_2_group"); ?>
+<?php echo $this->form->submit ?>
+<br />
+<hr />
+<p>
+    <sup>a</sup>"Specific" means: Examples of measures that depend on the type of protocol or application (mail, video, web, etc.) accessed via internet
+</p>
+</form>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+    $('#fieldset-row_1_group').hide();
+    $('#fieldset-row_2_group').hide();
+    $('#show2').click(function() {
+        $(this).hide();
+        $('#show3').show();
+        $('#fieldset-row_1_group').show();
+    });
+    $('#show3').click(function() {
+        $(this).hide();
+        $('#fieldset-row_2_group').show();
+    });
+    $("form").show();
+});
+
+</script>

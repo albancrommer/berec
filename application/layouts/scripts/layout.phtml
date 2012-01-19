@@ -1,0 +1,44 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+	<head>  
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="/bootstrap-1.1.1.min.css">
+        <link rel="stylesheet" href="/style.css">
+<?php
+		// if (ereg("Firefox/", $_SERVER["HTTP_USER_AGENT"])) 
+		// 	$this->headLink()->appendStylesheet('http://www.tiepolo.fr/questionnaire/style.css'); 
+		//         else
+
+		$this->headTitle('Respect my net');
+		
+?>
+
+<?echo($this->headTitle()) ?> 
+
+<?echo($this->headScript())?>
+		
+<?echo($this->headLink())?>
+		
+	</head> 
+	<body>
+        <div class="topbar-wrapper" style="z-index:7">
+            <div class="topbar">
+                <div class="fill">
+                    <div class="container">
+                        <h3><a href="/">Respect My Net : Transmission form</a></h3>
+                        <ul class="nav">
+                            <li><a href="http://respectmy.net">Back to RespectMyNet</a></li>
+                            <li><a href="/index/faq" id="faq">What is this?</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+			<div class="container">
+				<?php echo $this->layout()->content ?>
+			</div>
+		</div>
+	</body>
+</html>

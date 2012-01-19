@@ -1,0 +1,20 @@
+
+    body{padding-top:40px;}
+    .container label{width:200px;margin-right:16px;}
+    #id_operator{font-size:16pt;height:30px;}
+    .inline {
+        width: 230px;
+        display: inline-block;
+    }
+    textarea{margin-top:-8px;}
+    fieldset{margin-bottom:8px;}
+    form{display:none;}
+    #clues{margin-top:10px;}
+    h1{margin-top:10px;}
+    .errors{border-radius: 4px 4px 4px 4px;
+    background: none repeat scroll 0 0 #FAE5E3;
+    margin: 10px 0 10px;
+    padding: 18px;
+    list-style:none;
+    width:400px;
+    }
