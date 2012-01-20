@@ -33,14 +33,14 @@
 
                 $line[] = $country;
                 $line[] = $isp;
-                $line[] = $this->_data['row_'.$i.'_a'];
+                $line[] = addslashes($this->_data['row_'.$i.'_a']);
                 $line[] = "";
-                $line[] = $this->_data['row_'.$i.'_b'];
+                $line[] = addslashes($this->_data['row_'.$i.'_b']);
                 $line[] = "";
                 $line[] = "";
                 $line[] = "";
-                $line[] = $this->_data['row_'.$i.'_c'];
-                $line[] = $this->_data['row_'.$i.'_d'];
+                $line[] = addslashes($this->_data['row_'.$i.'_c']);
+                $line[] = addslashes($this->_data['row_'.$i.'_d']);
                 $line[] = "";
                 
                 
