@@ -57,7 +57,7 @@ class IndexController extends Zend_Controller_Action
                          ->send();
                  
                      $this->_flashMessenger->addMessage('Your report has been successfully saved.');
-                     // return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success'),null,true) );
+                     return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success'),null,true) );
                      
                      }
                      else{
