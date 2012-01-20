@@ -7,33 +7,32 @@ bootstrap.class = "Bootstrap"
 resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 resources.layout.layoutPath = APPLICATION_PATH "/layouts/scripts"
 resources.view[] = 
-# resources.db.adapter = "Pdo_Mysql"
+; resources.db.adapter = "Pdo_Mysql"
 contactemail = "nnmon@lqdn.fr"
 contactname = "LQDN"
 
-
 [development : production]
-# resources.db.params.dbname = "db"
-# resources.db.params.host = "127.0.0.1"
-# resources.db.params.username = "root"
-# resources.db.params.password = ""
-# resources.db.params.profiler   = true
+; resources.db.params.dbname = "db"
+; resources.db.params.host = "127.0.0.1"
+; resources.db.params.username = "root"
+; resources.db.params.password = ""
+; resources.db.params.profiler   = true
 phpSettings.display_startup_errors = 1
 phpSettings.display_errors = 1
 phpSettings.error_reporting = E_ALL 
-# mediaserver = ""
-# mediafilesystem = ""
-# webserver = ""
+; mediaserver = ""
+; mediafilesystem = ""
+; webserver = ""
 
 [staging : production]
-# resources.db.params.dbname = "db"
-# resources.db.params.host = "127.0.0.1"
-# resources.db.params.username = "root"
-# resources.db.params.password = ""
-# resources.db.params.profiler   = true
+; resources.db.params.dbname = "db"
+; resources.db.params.host = "127.0.0.1"
+; resources.db.params.username = "root"
+; resources.db.params.password = ""
+; resources.db.params.profiler   = true
 phpSettings.display_startup_errors = 0
 phpSettings.display_errors = 0
 phpSettings.error_reporting = 0
-# mediaserver = ""
-# mediafilesystem = ""
-# webserver = ""
+; mediaserver = ""
+; mediafilesystem = ""
+; webserver = ""
