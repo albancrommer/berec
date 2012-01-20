@@ -69,6 +69,39 @@ class Default_Form_F extends Zend_Form
             )
         ));
         
+        // add the name element
+        $this->addElement( 'text', 'name', array(
+            'label'       =>"Your name",
+            "decorators"  => $this->elementDecorators,
+            'required'    => false,
+            'filters'     => array(
+                array('StripTags') 
+            ),
+            'validators'  => array(
+                array('StringLength', true, array('min'=>1,'max'=>64)),
+                // array('Int')
+                // array('Alnum', false, array('allowWhiteSpace'=>true))
+                
+            )
+        ));
+        
+        // add the email element
+        $this->addElement( 'text', 'email', array(
+            'label'       =>"Your email",
+            "decorators"  => $this->elementDecorators,
+            'required'    => false,
+            'filters'     => array(
+                // array('StripTags') 
+            ),
+            'validators'  => array(
+                // array('StringLength', true, array('min'=>1,'max'=>16)),
+                array('EmailAddress')
+                // array('Alnum', false, array('allowWhiteSpace'=>true))
+                
+            )
+        ));
+        
+        
         // add the country element
         $this->addElement( 'select', 'country', array(
             'label'       =>"Country",

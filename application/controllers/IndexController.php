@@ -25,46 +25,36 @@ class IndexController extends Zend_Controller_Action
                  || $this->_request->getPost('row_1_a')
                  || $this->_request->getPost('row_2_a')
                  ){
-                     
                      $data      = $this->_form->getValues();
                      $model     = new Default_Model_File( $data );
                      $filename  = $model->get();
                      $file      = file_get_contents(APPLICATION_PATH."/../reports/".$filename);
-
-                     // $filename  = $dt.'.csv';
-                     // $fileFilter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
-                     // $writer    = new Zend_Log_Writer_Stream(APPLICATION_PATH.'/../reports/'.$filename);
-                     // $writer->addFilter($fileFilter);
-                     // $logger    = new Zend_Log($writer);
-                     // $logger->info($file);
-                 
-                 
                      if( APPLICATION_ENV == "development" ){
                          $tr    = new Zend_Mail_Transport_Smtp("smtp.free.fr");
                          Zend_Mail::setDefaultTransport($tr);
                      }
-                     // mail
                      $mailer            = new Zend_Mail();
                      $at                = $mailer->createAttachment($file);
                      $at->disposition   = Zend_Mime::DISPOSITION_ATTACHMENT;
                      $at->encoding      = Zend_Mime::ENCODING_BASE64;
                      $at->type          ="application/excel";
                      $at->filename      = $filename;
-                     $mailer->SetBodyText("New report ")
+                     $theDate           = date("F j, Y, g:i a");
+                     $name              = (null != $data['name'] ? $data['name'] : "someone");
+                     $email             = $data['email'];
+                     $mailer->SetBodyText("On $theDate, $name $email reported $filename")
                          ->SetFrom(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
                          ->AddTo(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
-                         ->setSubject("New #nnmon report")
+                         ->setSubject("New NetNeutrality report")
                          ->send();
-                 
                      $this->_flashMessenger->addMessage('Your report has been successfully saved.');
                      return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success'),null,true) );
-                     
-                     }
-                     else{
-                         $this->setAjaxResponse("error",array("You must submit at least one case",$errors));
-                         $this->_form->populate($this->_request->getPost());
-                         $this->view->edit = true;
-                     }
+                 }
+                 else{
+                     $this->setAjaxResponse("error",array("You must submit at least one case",$errors));
+                     $this->_form->populate($this->_request->getPost());
+                     $this->view->edit = true;
+                 }
              }
              else{
                  $errors = $this->_form->getMessages();
