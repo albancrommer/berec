@@ -1,11 +1,15 @@
 <?php echo $this->flashmessenger( $this->messages ) ?>
 <script type="text/javascript" charset="utf-8">
     $("form").hide();
+<?php if ($this->edit) : ?>
+    $(document).data("edit",true);
+<?php endif;   ?>
 </script>
 <form action="/index/index" method="post" accept-charset="utf-8">
 
 <h1>Your Country / ISP</h1>
 
+<?php echo $this->form->access; ?>
 <?php echo $this->form->country; ?>
 <?php echo $this->form->isp; ?>
 
@@ -22,7 +26,7 @@
 </span>
 <span class="inline">
     <span>&nbsp;</span>
-    <span class="element">How are you informed?</span>
+    <span class="element">How is the user informed?</span>
 </span>
 <span class="inline">
     <span class="checkbox">Can you activate/deactivate the measure?</span>
@@ -31,9 +35,9 @@
 
 
 <?php echo $this->form->getDisplayGroup("row_0_group"); ?>
-<p><a href="javascript:void(0)" id="show2" class="btn">Fill a second case</a></p>
+<p><a href="javascript:void(0)" id="show1" class="btn">Fill a second case</a></p>
 <?php echo $this->form->getDisplayGroup("row_1_group"); ?>
-<p><a href="javascript:void(0)" id="show3" class="btn" style="display:none;">Fill a third case</a></p>
+<p><a href="javascript:void(0)" id="show2" class="btn" style="display:none;">Fill a third case</a></p>
 <?php echo $this->form->getDisplayGroup("row_2_group"); ?>
 <?php echo $this->form->submit ?>
 <br />
@@ -44,18 +48,43 @@
 </form>
 <script type="text/javascript" charset="utf-8">
 $(function(){
-    $('#fieldset-row_1_group').hide();
-    $('#fieldset-row_2_group').hide();
-    $('#show2').click(function() {
+    $('#fieldset-row_1_group').ready(function() {
+        var sel = $(this).find('#row_1_a');
+        if(sel.val() == 0){
+           $('#fieldset-row_1_group').hide();
+        }else{
+            $("#show1").hide();
+            $("#show2").show();
+        }
+        
+    });
+    $('#fieldset-row_2_group').ready(function() {
+        var sel = $(this).find('#row_2_a');
+        if(sel.val() == 0){
+           $('#fieldset-row_2_group').hide();
+        }
+        
+    });
+    $('#show1').click(function() {
         $(this).hide();
-        $('#show3').show();
+        $('#show2').show();
         $('#fieldset-row_1_group').show();
     });
-    $('#show3').click(function() {
+    $('#show2').click(function() {
         $(this).hide();
         $('#fieldset-row_2_group').show();
     });
     $("form").show();
+    
+    $("textarea").focus(function() {
+        if( $(document).data("edit",true)){
+            return;
+        }
+        if( $(this).attr('inited') != "inited" ){
+            $(this).val('');
+            $(this).attr('inited', "inited" );
+        }
+    })
 });
 
 </script>

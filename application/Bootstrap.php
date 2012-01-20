@@ -5,12 +5,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 
 
-  	protected function _initDoctype()
+    protected function _initParams()
     {
-	    $this->bootstrap('view');
-	    $view = $this->getResource('view');
-	    $view->doctype('XHTML1_STRICT');
-//		ZendX_JQuery::enableView($view);
+        Zend_Registry::set('contactemail', $this->getOption('contactemail'));
+        Zend_Registry::set('contactname',$this->getOption('contactname'));
+    }
+
+    protected function _initDoctype()
+    {
+        $this->bootstrap('view');
+        $view = $this->getResource('view');
+        $view->doctype('XHTML1_STRICT');
     }
 
     protected function _initAutoload()
@@ -44,14 +49,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		
 	}
-    protected function _initLog()
-    {
-        $app        = $this->getApplication();
-        $dt         = time().microtime();
-        $fileFilter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
-        $writer     = new Zend_Log_Writer_Stream(APPLICATION_PATH.'/../reports/'.$dt.'.csv');
-        $writer->addFilter($fileFilter);
-        $logger = new Zend_Log($redacteur);
-        Zend_Registry::set('logger', $logger);
-    }}
+    
+}
 

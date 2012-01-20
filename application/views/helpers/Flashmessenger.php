@@ -13,7 +13,7 @@ class Default_View_Helper_Flashmessenger extends Zend_View_Helper_Abstract {
         
         foreach ($this->_messages as $m) {
             $output.='
-            <p class="flashMessage">'.$m.'</p>';
+            <p class="flashMessage alert-message">'.$m.'</p>';
         }
 	  
 	    return( '

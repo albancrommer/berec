@@ -19,7 +19,7 @@ require_once(APPLICATION_PATH.'/configs/env.php');
 
 // Define application environment
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? $env : 'staging'));
+    || define('APPLICATION_ENV', ( $env ? $env : 'staging'));
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
@@ -40,7 +40,7 @@ try {
 } catch (Exception $e) {
     echo('<h1>Critical error</h1>');
     if( APPLICATION_ENV == "development"){
-        Zend_Debug::dump($e);
+        var_dump($e);
     }
 }
 

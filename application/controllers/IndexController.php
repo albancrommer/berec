@@ -1,6 +1,8 @@
 <?php
 
 require( APPLICATION_PATH.'/forms/F.php');
+require( APPLICATION_PATH.'/models/File.php');
+require( APPLICATION_PATH.'/../library/Zend/Controller/Action/Helper/FlashMessenger.php');
 
 class IndexController extends Zend_Controller_Action
 {
@@ -8,6 +10,7 @@ class IndexController extends Zend_Controller_Action
     public function init()
     {
         $contextSwitch              = $this->_helper->getHelper('contextSwitch');
+        $this->_flashMessenger          = $this->_helper->getHelper('FlashMessenger');
 
     }
 
@@ -17,14 +20,56 @@ class IndexController extends Zend_Controller_Action
 
          if( $this->_request->isPost() ){
              if( $this->_form->isValid( $this->_request->getPost() ) ){
-                 $this->_model->save();
-                 $this->_flashMessenger->addMessage('Your report has been successfully saved.');
-                 return $this->_redirect( $this->view->url(array('index','success'),null,true) );
+                 
+                 if( $this->_request->getPost('row_0_a')
+                 || $this->_request->getPost('row_1_a')
+                 || $this->_request->getPost('row_2_a')
+                 ){
+                     
+                     $data      = $this->_form->getValues();
+                     $dt        = time();
+                     $model     = new Default_Model_File( $data );
+                     $file      = $model->get();
+                     $filename  = $dt.'.csv';
+                     $fileFilter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
+                     $writer    = new Zend_Log_Writer_Stream(APPLICATION_PATH.'/../reports/'.$filename);
+                     $writer->addFilter($fileFilter);
+                     $logger    = new Zend_Log($writer);
+                     $logger->info($file);
+                 
+                 
+                     if( APPLICATION_ENV == "development" ){
+                         $tr    = new Zend_Mail_Transport_Smtp("smtp.free.fr");
+                         Zend_Mail::setDefaultTransport($tr);
+                     }
+                 
+                     // mail
+                     $mailer            = new Zend_Mail();
+                     $at                = $mailer->createAttachment($file);
+                     $at->disposition   = Zend_Mime::DISPOSITION_ATTACHMENT;
+                     $at->encoding      = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
+                     $at->type          ="application/excel";
+                     $at->filename      = $filename;
+                     $mailer->SetBodyText($file)
+                         ->SetFrom(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
+                         ->AddTo(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
+                         ->setSubject("New #nnmon report")
+                         ->send();
+                 
+                     $this->_flashMessenger->addMessage('Your report has been successfully saved.');
+                     return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success'),null,true) );
+                     }
+                     else{
+                         $this->setAjaxResponse("error",array("You must submit at least one case",$errors));
+                         $this->_form->populate($this->_request->getPost());
+                         $this->view->edit = 1;
+                     }
              }
              else{
                  $errors = $this->_form->getMessages();
                  $this->setAjaxResponse("error",array("Invalid form",$errors));
                  $this->_form->populate($this->_request->getPost());
+                 $this->view->edit = 1;
              } 
          }
          $this->view->form   = $this->_form;
@@ -70,8 +115,8 @@ class IndexController extends Zend_Controller_Action
      {
 
          if( is_string($messages)){
-             $messages[]            = $messages;
-             $this->view->messages  = $messages;
+             $ar[]                  = $messages;
+             $this->view->messages  = $ar;
          }
          else foreach ($messages as $key => $message) {
              $this->setAjaxResponseMessages($message);

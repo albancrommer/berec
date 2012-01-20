@@ -8,8 +8,8 @@ resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 resources.layout.layoutPath = APPLICATION_PATH "/layouts/scripts"
 resources.view[] = 
 # resources.db.adapter = "Pdo_Mysql"
-contactemail = "contact@melodhier.com"
-contactname = "La Mélod'Hier"
+contactemail = "nnmon@lqdn.fr"
+contactname = "LQDN"
 
 
 [development : production]

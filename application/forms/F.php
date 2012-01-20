@@ -17,7 +17,7 @@ class Default_Form_F extends Zend_Form
         $this->checkboxDecorator        = array( 'ViewHelper', 'Errors', 'Description', array('content' => 'HtmlTag',array('tag' => 'dd', 'class'=>'checkbox')), array('Label',array('tag' => 'dt')), array(array('row' => 'HtmlTag'), array('tag' => 'div', 'class' => 'row')) );
         $this->inlineCheckboxDecorator  = array( 'ViewHelper', 'Errors', 'Description', array('content' => 'HtmlTag',array('tag' => 'span', 'class'=>'checkbox')),  array(array('row' => 'HtmlTag'), array('tag' => 'span', 'class' => 'inline')), );
         $this->elementDecorators        = array( 'ViewHelper', 'Description', array('content' => 'HtmlTag',array('tag' => 'dd', 'class'=>'element')), array('Label',array('tag' => 'dt')), 'Errors', array(array('row' => 'HtmlTag'), array('tag' => 'div', 'class' => 'row')) );         #
-        $this->inlineElementDecorators  = array( 'ViewHelper', 'Errors', array('Description',array('escape' => false, 'class'=>"description")), array('content' => 'HtmlTag',array('tag' => 'span', 'class'=>'element')), array('Label',array('tag' => 'span', 'class'=>'label' )), array(array('row' => 'HtmlTag'), array('tag' => 'span', 'class' => 'inline')), );
+        $this->inlineElementDecorators  = array( 'ViewHelper', array('Description',array('escape' => false, 'class'=>"description")), array('content' => 'HtmlTag',array('tag' => 'span', 'class'=>'element')), 'Errors', array('Label',array('tag' => 'span', 'class'=>'label' )), array(array('row' => 'HtmlTag'), array('tag' => 'span', 'class' => 'inline')), );
         $this->buttonDecorators         = array( 'ViewHelper', array('HtmlTag',array('tag' => 'dd', 'class' => 'button')), array(array('row' => 'HtmlTag'), array('tag' => 'div', 'class' => '')) );
         $this->hiddenDecorators         = array( 'ViewHelper', array('HtmlTag',array('tag' => 'span')), array(array('row' => 'HtmlTag'), array('tag' => 'span')) );
         $this->setAttrib('class','std');
@@ -26,19 +26,48 @@ class Default_Form_F extends Zend_Form
         $this->setMethod('post');
         
         $this->questions=array(
-        	"General: User's access is blocked/throttled, e.g. after having downloaded/uploaded a certain amount of data.	",
-        	"General: Different priority levels within Internet access traffic             	",
-        	"General: Restriction on the type of terminal allowed, or tiered pricing depending on the terminal used	",
-        	"General: Other relevant practice	",
-        	"Specific: P2P file sharing is blocked/throttled",
-        	"Specific: VoIP is blocked/throttled",
-        	"Specific: Instant Messaging services are blocked/throttled",
-        	"Specific: Other specific kind of traffic port, protocol, application, usage, etc is blocked/throttled",
-        	"Specific: Specific application/content provider e.g. website or VoIP provider is blocked/throttled",
-            "Specific: Specific type of over-the-top traffic given preferential treatment e.g. specific content/application and/or specific application/content provider",
-            "Other: Details in descriptions",
+            0=>"Select...",
+            "General: User's access is blocked/throttled, e.g. after having downloaded/uploaded a certain amount of data."            
+            =>"General: User's access is blocked/throttled, e.g. after having downloaded/uploaded a certain amount of data.",
+        	"General: Different priority levels within Internet access traffic"
+        	=>"General: Different priority levels within Internet access traffic",
+        	"General: Restriction on the type of terminal allowed, or tiered pricing depending on the terminal used"
+        	=>"General: Restriction on the type of terminal allowed, or tiered pricing depending on the terminal used",
+        	"General: Other relevant practice"
+        	=>"General: Other relevant practice",
+        	"Specific: P2P file sharing is blocked/throttled"
+        	=>"Specific: P2P file sharing is blocked/throttled",
+        	"Specific: VoIP is blocked/throttled"
+        	=>"Specific: VoIP is blocked/throttled",
+        	"Specific: Instant Messaging services are blocked/throttled"
+        	=>"Specific: Instant Messaging services are blocked/throttled",
+        	"Specific: Other specific kind of traffic port, protocol, application, usage, etc is blocked/throttled"
+        	=>"Specific: Other specific kind of traffic port, protocol, application, usage, etc is blocked/throttled",
+        	"Specific: Specific application/content provider e.g. website or VoIP provider is blocked/throttled"
+        	=>"Specific: Specific application/content provider e.g. website or VoIP provider is blocked/throttled",
+            "Specific: Specific type of over-the-top traffic given preferential treatment e.g. specific content/application and/or specific application/content provider"
+            =>"Specific: Specific type of over-the-top traffic given preferential treatment e.g. specific content/application and/or specific application/content provider",
+            "Other: Details in descriptions"
+            =>"Other: Details in descriptions",
         );
         
+        
+        // add the access element
+        $this->addElement( 'select', 'access', array(
+            'label'       =>"Type of network",
+            "decorators"  => $this->elementDecorators,
+            'required'    => true,
+            'filters'     => array(
+                array('StripTags') 
+            ),
+            'validators'  => array(
+                array('StringLength', true, array('min'=>1,'max'=>64)),
+            ),
+            'multiOptions'=>array(
+                "fixed"=>"Fixed Internet (ADSL)",
+                "mobile"=>"Mobile Internet"
+            )
+        ));
         
         // add the country element
         $this->addElement( 'select', 'country', array(
@@ -52,8 +81,35 @@ class Default_Form_F extends Zend_Form
                 array('StringLength', true, array('min'=>1,'max'=>64)),
             ),
             'multiOptions'=>array(
-                "Autriche", "Belgique", "Bulgarie", "Chypre", "République Tchèque", "Danemark", "Estonie", "Finlande", "France", "Allemagne", "Grèce", "Hongrie", "Islande", "Irlande", "Italie", "Lettonie", "Lituanie", "Luxembourg", "Malte", "Pays-Bas", "Norvège", "Pologne", "Portugal", "Roumanie", "Slovaquie", "Slovénie", "Espagne", "Suède", "Royaume-Uni"
-                
+                "Austria"=>"Austria",
+                "Belgium"=>"Belgium",
+                "Bulgaria"=>"Bulgaria",
+                "Cyprus"=>"Cyprus",
+                "Czech Republic"=>"Czech Republic",
+                "Denmark"=>"Denmark",
+                "Estonia"=>"Estonia",
+                "Finland"=>"Finland",
+                "France"=>"France",
+                "Germany"=>"Germany",
+                "Greece"=>"Greece",
+                "Hungary"=>"Hungary",
+                "Iceland"=>"Iceland",
+                "Ireland"=>"Ireland",
+                "Italy"=>"Italy",
+                "Latvia"=>"Latvia",
+                "Lithuania"=>"Lithuania",
+                "Luxembourg"=>"Luxembourg",
+                "Malta"=>"Malta",
+                "Netherlands"=>"Netherlands",
+                "Norway"=>"Norway",
+                "Poland"=>"Poland",
+                "Portugal"=>"Portugal",
+                "Romania"=>"Romania",
+                "Slovakia"=>"Slovakia",
+                "Slovenia"=>"Slovenia",
+                "Spain"=>"Spain",
+                "Sweden"=>"Sweden",
+                "United Kingdom"=>"United Kingdom"
             )
         ));
         
@@ -110,7 +166,7 @@ class Default_Form_F extends Zend_Form
                   array('StripTags') 
                 ),
                 "validators"       => array(
-                 array('Int'),
+                 // array('Int'),
                 ),
                 "multiOptions"  => $this->questions
             ));    
@@ -130,7 +186,7 @@ class Default_Form_F extends Zend_Form
                     "cols"=>20,
                     "rows"=>5
                 ),
-                'value'=>"Description"
+                'value'=>"{Describe how this works}"
             ));
         
             // add the User informed element
@@ -146,7 +202,8 @@ class Default_Form_F extends Zend_Form
                 'attribs'=>array(
                     "cols"=>20,
                     "rows"=>5
-                ),                
+                )    ,
+                'value'=>"{Describe how became informed: did your ISP explain for example?}"
             ));
             // add the User deactivate element
             $this->addElement( 'select', $prefix."_d", array(
