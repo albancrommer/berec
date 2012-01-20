@@ -27,7 +27,7 @@ class IndexController extends Zend_Controller_Action
                  ){
                      
                      $data      = $this->_form->getValues();
-                     $dt        = time();
+                     $dt        = microtime(true);
                      $model     = new Default_Model_File( $data );
                      $file      = $model->get();
                      $filename  = $dt.'.csv';
@@ -83,6 +83,11 @@ class IndexController extends Zend_Controller_Action
      }
      
      public function faqAction()
+     {
+         
+     }
+     
+     public function howtoAction()
      {
          
      }
