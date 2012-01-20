@@ -208,7 +208,7 @@ class Default_Form_F extends Zend_Form
             // add the User deactivate element
             $this->addElement( 'select', $prefix."_d", array(
                 "decorators"  => $this->inlineCheckboxDecorator,
-                'required'    => true,
+                'required'    => false,
                 'filters'     => array(
                     array('StripTags') 
                 ),

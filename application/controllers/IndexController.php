@@ -63,14 +63,14 @@ class IndexController extends Zend_Controller_Action
                      else{
                          $this->setAjaxResponse("error",array("You must submit at least one case",$errors));
                          $this->_form->populate($this->_request->getPost());
-                         $this->view->edit = 1;
+                         $this->view->edit = true;
                      }
              }
              else{
                  $errors = $this->_form->getMessages();
                  $this->setAjaxResponse("error",array("Invalid form",$errors));
                  $this->_form->populate($this->_request->getPost());
-                 $this->view->edit = 1;
+                 $this->view->edit = true;
              } 
          }
          $this->view->form   = $this->_form;
