@@ -203,7 +203,7 @@ class Default_Form_F extends Zend_Form
                     "cols"=>20,
                     "rows"=>5
                 )    ,
-                'value'=>"{Describe how became informed: did your ISP explain for example?}"
+                'value'=>"{Describe how you were informed: did your ISP explain for example?}"
             ));
             // add the User deactivate element
             $this->addElement( 'select', $prefix."_d", array(
@@ -218,7 +218,7 @@ class Default_Form_F extends Zend_Form
                 
                 ),
                 'multiOptions'=>array(
-                    "empty"=>"Select... ",
+                    " "=>"Select... ",
                     "yes"=>"yes",
                     "no"=>"no"
                 )

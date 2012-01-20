@@ -27,37 +27,38 @@ class IndexController extends Zend_Controller_Action
                  ){
                      
                      $data      = $this->_form->getValues();
-                     $dt        = microtime(true);
                      $model     = new Default_Model_File( $data );
-                     $file      = $model->get();
-                     $filename  = $dt.'.csv';
-                     $fileFilter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
-                     $writer    = new Zend_Log_Writer_Stream(APPLICATION_PATH.'/../reports/'.$filename);
-                     $writer->addFilter($fileFilter);
-                     $logger    = new Zend_Log($writer);
-                     $logger->info($file);
+                     $filename  = $model->get();
+                     $file      = file_get_contents(APPLICATION_PATH."/../reports/".$filename);
+
+                     // $filename  = $dt.'.csv';
+                     // $fileFilter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
+                     // $writer    = new Zend_Log_Writer_Stream(APPLICATION_PATH.'/../reports/'.$filename);
+                     // $writer->addFilter($fileFilter);
+                     // $logger    = new Zend_Log($writer);
+                     // $logger->info($file);
                  
                  
                      if( APPLICATION_ENV == "development" ){
                          $tr    = new Zend_Mail_Transport_Smtp("smtp.free.fr");
                          Zend_Mail::setDefaultTransport($tr);
                      }
-                 
                      // mail
                      $mailer            = new Zend_Mail();
                      $at                = $mailer->createAttachment($file);
                      $at->disposition   = Zend_Mime::DISPOSITION_ATTACHMENT;
-                     $at->encoding      = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
+                     $at->encoding      = Zend_Mime::ENCODING_BASE64;
                      $at->type          ="application/excel";
                      $at->filename      = $filename;
-                     $mailer->SetBodyText($file)
+                     $mailer->SetBodyText("New report ")
                          ->SetFrom(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
                          ->AddTo(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
                          ->setSubject("New #nnmon report")
                          ->send();
                  
                      $this->_flashMessenger->addMessage('Your report has been successfully saved.');
-                     return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success'),null,true) );
+                     // return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success'),null,true) );
+                     
                      }
                      else{
                          $this->setAjaxResponse("error",array("You must submit at least one case",$errors));

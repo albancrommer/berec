@@ -27,6 +27,9 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+require_once 'Zend/Loader/Autoloader.php';
+require_once 'PHPExcel.php';
+
 /** Zend_Application */
 require_once 'Zend/Application.php';  
 
