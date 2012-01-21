@@ -1,5 +1,6 @@
+<?php echo $this->flashmessenger( $this->messages ) ?>
 <h1>Bravo!</h1>
-<p>Your report was sucessfully saved and is available on :</p>
+<p>Your report is available on :</p>
 <p>
     <a class ="btn" href="<?php echo Zend_Registry::get('webserveraddress') ?>/reports/<?php echo $this->escape($this->filename); ?>">
         <?php echo Zend_Registry::get('webserveraddress'); ?>/reports/<?php echo $this->escape($this->filename); ?>
