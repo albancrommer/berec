@@ -28,27 +28,27 @@ class IndexController extends Zend_Controller_Action
                      $data      = $this->_form->getValues();
                      $model     = new Default_Model_File( $data );
                      $filename  = $model->get();
-                     $file      = file_get_contents(APPLICATION_PATH."/../reports/".$filename);
-                     if( APPLICATION_ENV == "development" ){
-                         $tr    = new Zend_Mail_Transport_Smtp("smtp.free.fr");
-                         Zend_Mail::setDefaultTransport($tr);
-                     }
-                     $mailer            = new Zend_Mail();
-                     $at                = $mailer->createAttachment($file);
-                     $at->disposition   = Zend_Mime::DISPOSITION_ATTACHMENT;
-                     $at->encoding      = Zend_Mime::ENCODING_BASE64;
-                     $at->type          ="application/excel";
-                     $at->filename      = $filename;
-                     $theDate           = date("F j, Y, g:i a");
-                     $name              = (null != $data['name'] ? $data['name'] : "someone");
-                     $email             = $data['email'];
-                     $mailer->SetBodyText("On $theDate, $name $email reported $filename")
-                         ->SetFrom(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
-                         ->AddTo(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
-                         ->setSubject("New NetNeutrality report")
-                         ->send();
+                     // $file      = file_get_contents(APPLICATION_PATH."/../reports/".$filename);
+                     // if( APPLICATION_ENV == "development" ){
+                     //     $tr    = new Zend_Mail_Transport_Smtp("smtp.free.fr");
+                     //     Zend_Mail::setDefaultTransport($tr);
+                     // }
+                     // $mailer            = new Zend_Mail();
+                     // $at                = $mailer->createAttachment($file);
+                     // $at->disposition   = Zend_Mime::DISPOSITION_ATTACHMENT;
+                     // $at->encoding      = Zend_Mime::ENCODING_BASE64;
+                     // $at->type          ="application/excel";
+                     // $at->filename      = $filename;
+                     // $theDate           = date("F j, Y, g:i a");
+                     // $name              = (null != $data['name'] ? $data['name'] : "someone");
+                     // $email             = $data['email'];
+                     // $mailer->SetBodyText("On $theDate, $name $email reported $filename")
+                     //     ->SetFrom(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
+                     //     ->AddTo(Zend_Registry::get('contactemail'),Zend_Registry::get('contactname'))
+                     //     ->setSubject("New NetNeutrality report")
+                     //     ->send();
                      $this->_flashMessenger->addMessage('Your report has been successfully saved.');
-                     return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success'),null,true) );
+                     return $this->_redirect( $this->view->url(array("controller"=>'index',"action"=>'success','f'=>$filename),null,true) );
                  }
                  else{
                      $this->setAjaxResponse("error",array("You must submit at least one case",$errors));
@@ -70,6 +70,9 @@ class IndexController extends Zend_Controller_Action
 
      public function successAction()
      {
+         $filename                      = $this->getRequest()->getParam('f');
+         $this->view->filename          = $filename;
+         $this->view->webserveraddress  = Zend_Registry::get('webserveraddress');
          
      }
      

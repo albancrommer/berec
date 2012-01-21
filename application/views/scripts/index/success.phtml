@@ -1,10 +1,23 @@
 <h1>Bravo!</h1>
+<p>Your report was sucessfully saved and is available on :</p>
 <p>
-    Your report was sucessfully recorded and will be sent dutyfully to the 
-    <a href="https://www.laquadrature.net/wiki/BEREC_Questionnaire_campaign">
-    European body of telecommunications regulators (BEREC).
+    <a class ="btn" href="<?php echo Zend_Registry::get('webserveraddress') ?>/reports/<?php echo $this->escape($this->filename); ?>">
+        <?php echo Zend_Registry::get('webserveraddress'); ?>/reports/<?php echo $this->escape($this->filename); ?>
     </a>
 </p>
+<h2>Please send it immediately to BEREC</h2>
+<p>Send it to <a href="mailto:pm@berec.europa.eu">pm@berec.europa.eu</a> using your personal email address.</p>
+<p>If you need some inspiration about the email body content, here is an example :</p>
+<pre>
+Greetings,
+
+The following attachment contains details regarding a Net Neutrality 
+abuse(s) I would like you to consider.
+
+Yours faithfully,
+{signature}</pre>
+<p> More info is available <a href="https://www.laquadrature.net/wiki/BEREC_Questionnaire_campaign" target="_blank">
+here</a> on the wereabouts of this email.</p>
 <h2>Got more where that came from?</h2>
 <p>
     If you want to submit more reports, thank you for <a href="/">doing so.</a>

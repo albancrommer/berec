@@ -41,7 +41,7 @@ class Default_Model_File
         $dt             = microtime(true);
         $objWriter      =  PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $filename       = "BEREC-$dt.xls";
-        $objWriter->save(APPLICATION_PATH."/../reports/".$filename);
+        $objWriter->save(APPLICATION_PATH."/../public/reports/".$filename);
         return $filename;
     }
 }

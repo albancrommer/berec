@@ -10,6 +10,7 @@ resources.view[] =
 ; resources.db.adapter = "Pdo_Mysql"
 contactemail = "nnmon@lqdn.fr"
 contactname = "LQDN"
+webserveraddress = ""
 
 [development : production]
 ; resources.db.params.dbname = "db"
@@ -22,7 +23,7 @@ phpSettings.display_errors = 1
 phpSettings.error_reporting = E_ALL 
 ; mediaserver = ""
 ; mediafilesystem = ""
-; webserver = ""
+; webserveraddress = ""
 
 [staging : production]
 ; resources.db.params.dbname = "db"
@@ -35,4 +36,4 @@ phpSettings.display_errors = 0
 phpSettings.error_reporting = 0
 ; mediaserver = ""
 ; mediafilesystem = ""
-; webserver = ""
+; webserveraddress = ""

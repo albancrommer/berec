@@ -9,6 +9,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         Zend_Registry::set('contactemail', $this->getOption('contactemail'));
         Zend_Registry::set('contactname',$this->getOption('contactname'));
+        Zend_Registry::set('webserveraddress',$this->getOption('webserveraddress'));
     }
 
     protected function _initDoctype()
