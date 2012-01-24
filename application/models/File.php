@@ -31,12 +31,12 @@ class Default_Model_File
                 continue;
             }
             $row = $i+3;
-            $objWorksheet->setCellValue("A$row", $country); 
-            $objWorksheet->setCellValue("B$row", $isp); 
-            $objWorksheet->setCellValue("C$row", $this->_data['row_'.$i.'_a']); 
-            $objWorksheet->setCellValue("E$row", $this->_data['row_'.$i.'_b']); 
-            $objWorksheet->setCellValue("I$row", $this->_data['row_'.$i.'_c']); 
-            $objWorksheet->setCellValue("J$row", $this->_data['row_'.$i.'_d']); 
+            $objWorksheet->setCellValueExplicit("A$row", $country,PHPExcel_Cell_DataType::TYPE_STRING); 
+            $objWorksheet->setCellValueExplicit("B$row", $isp,PHPExcel_Cell_DataType::TYPE_STRING); 
+            $objWorksheet->setCellValueExplicit("C$row", $this->_data['row_'.$i.'_a'],PHPExcel_Cell_DataType::TYPE_STRING); 
+            $objWorksheet->setCellValueExplicit("E$row", $this->_data['row_'.$i.'_b'],PHPExcel_Cell_DataType::TYPE_STRING); 
+            $objWorksheet->setCellValueExplicit("I$row", $this->_data['row_'.$i.'_c'],PHPExcel_Cell_DataType::TYPE_STRING); 
+            $objWorksheet->setCellValueExplicit("J$row", $this->_data['row_'.$i.'_d'],PHPExcel_Cell_DataType::TYPE_STRING); 
         }
         $dt             = microtime(true);
         $objWriter      =  PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
